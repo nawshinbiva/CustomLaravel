@@ -1,2 +1,9 @@
 php artisan make:controller NewsPostController
-php artisan migrate
+php artisan migrate 
+
+tables:
+- category
+- post
+- comments
+
+php artisan make:migration create_comments_table
