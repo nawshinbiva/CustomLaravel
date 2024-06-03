@@ -1,1 +1,2 @@
 php artisan make:controller NewsPostController
+php artisan migrate
