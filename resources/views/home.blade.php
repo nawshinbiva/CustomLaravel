@@ -19,6 +19,7 @@ $project_name='Simple <br> Project'
   @foreach ($colors as $color)
       <p>{{$color}}</p>
   @endforeach
+  
 
 </body>
 </html>
