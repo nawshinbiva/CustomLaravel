@@ -7,3 +7,5 @@ tables:
 - comments
 
 php artisan make:migration create_comments_table
+
+php artisan make:model NewsCategory

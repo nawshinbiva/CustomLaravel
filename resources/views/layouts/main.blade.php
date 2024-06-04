@@ -13,7 +13,11 @@
     <p><a href="{{ route('index') }}">Home</a></p>
     <p><a href="{{ route('about') }}">About Us</a></p>
     <p><a href="{{ route('contact') }}">Contact Us</a></p>
-        
+    <head>MODEL</head>
+    <p><a href="{{ route('model-saving') }}">Saving</a></p>
+    <p><a href="{{ route('model-quary') }}">Quary</a></p>
+
+
     <hr>
     @yield('content')
 </body>
