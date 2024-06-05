@@ -4,29 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsCategory;
 use Illuminate\Http\Request;
+use Exception;
 
 class MainController extends Controller
 {
     public function index()
     {
         return view('index');
-        //
-        $name = 'Nawshin Nasir';
-        $gender = 'Female';
-        $colors = [
-            'Black',
-            'White',
-            'Yellow',
-            'Red',
-            'Blue',
-            'Green',
-            'Orange',
-        ];
-        return view('home', [
-            'name' => $name,
-            'gender' => $gender,
-            'colors' => $colors
-        ]);
+        
     }
 
     public function about_us()
@@ -43,12 +28,16 @@ class MainController extends Controller
 
     public function model_saving()
     {
-
-        $m = new NewsCategory();
-        $m->name = 'Education';
-        $m->photo = 'no_image.jpg';
-        $m->details = 'News details about Education.';
-        //$m->save();
+        try {
+            $m = new NewsCategory();
+            $m->name = 'Gossip';
+            $m->photo = 'no_image.jpg';
+            $m->details = 'News details about gossip.';
+            $m->save();
+            echo 'Category saved successfully!';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
 
         die('Done Processing!');
     }
@@ -92,7 +81,7 @@ class MainController extends Controller
 
 
         //where in
-        $cats = NewsCategory::whereIn('id',[1,3,5])->get();
+        $cats = NewsCategory::whereIn('id', [1, 3, 5])->get();
 
         echo '<h2>WHERE IN</h2>';
         foreach ($cats as $key => $cat) {
@@ -101,16 +90,68 @@ class MainController extends Controller
 
         //order by
         $cats = NewsCategory::where([])
-        ->orderBy('id','desc')
-        ->get();
+            ->orderBy('id', 'desc')
+            ->get();
         echo '<h2>ORDER BY</h2>';
         foreach ($cats as $key => $cat) {
             echo "{$cat->id}.{$cat->name}<br>";
         }
 
+        //Limit
+        $cats = NewsCategory::where([])
+            ->limit(4)
+            ->get();
+        echo '<h2>LIMIT</h2>';
+        foreach ($cats as $key => $cat) {
+            echo "{$cat->id}.{$cat->name}<br>";
+        }
 
+        //find
+        $cat = NewsCategory::find(9);
+        echo '<h2>FIND</h2>';
+        if ($cat != null) {
+            echo "{$cat->id}.{$cat->name}<br>";
+        }
 
+        //sum
+        $sum = NewsCategory::where([])
+            ->sum('id');
+        echo '<h2>SUM</h2>';
+        echo "$sum <br>";
 
+        //Average
+        $avg = NewsCategory::where([])
+            ->avg('id');
+        echo '<h2>AVERAGE</h2>';
+        echo "$avg <br>";
+
+        //quary
+        $cats = NewsCategory::where('id', '<', 4)
+            ->get();
+        echo '<h2>QUARY SCOPE</h2>';
+        foreach ($cats as $key => $cat) {
+            echo "{$cat->id}.{$cat->name}<br>";
+        }
+
+        //like
+        $cats = NewsCategory::where('name', 'like', '%i%')
+            ->get();
+        echo '<h2>LIKE</h2>';
+        foreach ($cats as $key => $cat) {
+            echo "{$cat->id}.{$cat->name}<br>";
+        }
+
+        //append
+        $cats = NewsCategory::where([])
+            ->get();
+        echo '<h2>APPEND</h2>';
+        foreach ($cats as $key => $cat) {
+            echo "{$cat->id}.{$cat->short_name}<br>";
+        }
+
+        
+
+        //ALL
         $categories = NewsCategory::all();
         echo '<h2>ALL</h2>';
         foreach ($categories as $key => $cat) {
