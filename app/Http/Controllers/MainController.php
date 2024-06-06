@@ -3,15 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsCategory;
+use App\Models\NewsPost;
 use Illuminate\Http\Request;
 use Exception;
 
 class MainController extends Controller
 {
+    public function model_relationships(){
+
+        $cats=NewsCategory::all();
+        $post= NewsPost::all();
+
+        $p=new NewsPost();
+        $p->title = '';
+
+        die("Relationship");
+    }
+
     public function index()
     {
         return view('index');
-        
     }
 
     public function about_us()
@@ -28,16 +39,14 @@ class MainController extends Controller
 
     public function model_saving()
     {
-        try {
-            $m = new NewsCategory();
-            $m->name = 'Gossip';
-            $m->photo = 'no_image.jpg';
-            $m->details = 'News details about gossip.';
-            $m->save();
-            echo 'Category saved successfully!';
-        } catch (Exception $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
+
+
+        $m = new NewsCategory();
+        $m->name = 'Gossip';
+        $m->photo = 'no_image.jpg';
+        $m->details = 'News details about gossip.';
+        //$m->save();
+        echo 'Category saved successfully!';
 
         die('Done Processing!');
     }
@@ -149,7 +158,7 @@ class MainController extends Controller
             echo "{$cat->id}.{$cat->short_name}<br>";
         }
 
-        
+
 
         //ALL
         $categories = NewsCategory::all();

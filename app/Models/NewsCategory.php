@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class NewsCategory extends Model
 {
-    protected $table='news_categories';
-    protected $appends=['short_name'];
+    protected $table = 'news_categories';
+    protected $appends = ['short_name'];
 
     public static function boot()
     {
@@ -20,10 +20,9 @@ class NewsCategory extends Model
             $m->name = strtoupper($m->name);
             $old = NewsCategory::where('name', $m->name)->first();
             if ($old != null) {
-                
+
                 throw new Exception("News category with $m->name already exist.", 1);
             }
-            
         });
 
         self::updating(function ($m) {
@@ -32,8 +31,10 @@ class NewsCategory extends Model
                 ->where('id', '<>', $m->id) // Ensure it's not the same record
                 ->first();
             if ($old != null) {
+                return false;
                 throw new Exception("News category with name {$m->name} already exists.");
             }
+            return $m;
         });
 
         self::created(function ($m) {
@@ -49,14 +50,14 @@ class NewsCategory extends Model
     public function getNameAttribute($name)
     {
         //return $name;
-        return strtolower($name).".";
+        return strtolower($name);
     }
     public function getShortNameAttribute()
     {
-        return substr($this->name,0,3);
+        return substr($this->name, 0, 3);
     }
 
-    
-   
+
+
     use HasFactory;
 }
